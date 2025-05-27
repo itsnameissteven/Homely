@@ -8,7 +8,7 @@
     <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
     <!-- Task Table -->
     <createTable tableName="task">
-      <column name="id" type="uuid">
+      <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
         <constraints primaryKey="true" nullable="false" />
       </column>
       <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
@@ -23,7 +23,7 @@
     </createTable>
     <!-- Item Table -->
     <createTable tableName="item">
-      <column name="id" type="uuid">
+      <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
         <constraints primaryKey="true" nullable="false" />
       </column>
       <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
@@ -35,11 +35,17 @@
     </createTable>
     <!-- User Table -->
     <createTable tableName="user">
-      <column name="id" type="uuid">
+      <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
         <constraints primaryKey="true" nullable="false" />
       </column>
       <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
       <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="username" type="varchar(50)">
+        <constraints nullable="false" unique="true" />
+      </column>
+      <column name="password" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
       <column name="first_name" type="varchar(50)">
         <constraints nullable="false" />
       </column>
@@ -70,7 +76,7 @@
       referencedColumnNames="id" />
     <!-- Entry table -->
     <createTable tableName="entry">
-      <column name="id" type="uuid">
+      <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
         <constraints primaryKey="true" nullable="false" />
       </column>
       <column name="created_at"
