@@ -6,5 +6,108 @@
 
   <changeSet id="1" author="Steven Mancine">
     <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
+    <!-- Task Table -->
+    <createTable tableName="task">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="description" type="text" />
+      <column name="frequency" type="integer">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <!-- Item Table -->
+    <createTable tableName="item">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="description" type="text" />
+    </createTable>
+    <!-- User Table -->
+    <createTable tableName="user">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="first_name" type="varchar(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_name" type="varchar(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="email" type="varchar(50)" />
+      <column name="phone_number" type="varchar(20)" />
+    </createTable>
+    <!-- Task to Item Many-to-Many -->
+    <createTable tableName="task_item">
+      <column name="task_id" type="uuid">
+        <constraints nullable="false" />
+      </column>
+      <column name="item_id" type="uuid">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint constraintName="fk_task_item_item_id"
+      baseTableName="task_item"
+      baseColumnNames="item_id"
+      referencedTableName="item"
+      referencedColumnNames="id" />
+    <addForeignKeyConstraint constraintName="fk_task_item_task_id"
+      baseTableName="task_item"
+      baseColumnNames="task_id"
+      referencedTableName="task"
+      referencedColumnNames="id" />
+    <!-- Entry table -->
+    <createTable tableName="entry">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="created_at"
+        type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="updated_at"
+        type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP" />
+      <column name="task_id"
+        type='uuid'>
+        <constraints nullable="false" />
+      </column>
+      <column name="user_id" type="uuid" />
+      <column
+        name="due_by" type="timestamp" />
+      <column name="is_eod" type="boolean"
+        defaultValueBoolean="true" />
+      <column name="is_complete" type="boolean"
+        defaultValueBoolean="false" />
+    </createTable>
+    <addForeignKeyConstraint constraintName="fk_entry_task_id"
+      baseTableName="entry"
+      baseColumnNames="task_id"
+      referencedTableName="task"
+      referencedColumnNames="id" />
+    <addForeignKeyConstraint constraintName="fk_entry_user_id"
+      baseTableName="entry"
+      baseColumnNames="user_id"
+      referencedTableName="user"
+      referencedColumnNames="id" />
+    <!-- Entry to Items many-to-many -->
+    <createTable tableName="entry_item">
+      <column name="entry_id" type="uuid">
+        <constraints nullable="false" />
+      </column>
+      <column name="item_id" type="uuid">
+        <constraints nullable="false" />
+      </column>
+      <column name="is_complete" type="boolean" defaultValueBoolean="false" />
+    </createTable>
   </changeSet>
 </databaseChangeLog>
