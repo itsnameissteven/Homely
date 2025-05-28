@@ -1,16 +1,16 @@
 services:
-  # backend:
-  #   build: ./backend-service
-  #   ports:
-  #     - '8080:8080'
-  #   restart: always
-  #   depends_on:
-  #     - migration
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/inventory_tracker
-  #     SPRING_DATASOURCE_USERNAME: postgres
-  #     SPRING_DATASOURCE_PASSWORD: postgres
-  #     SECURITY_JWT_SECRET_KEY: ${SECRET_KEY}
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - migration
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DATABASE_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SECURITY_JWT_SECRET_KEY: ${SECRET_KEY}
 
   migration:
     build: ./migration-service
