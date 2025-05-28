@@ -10,7 +10,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-@Table(name = "users")
+@Table(name = "user")
 @Entity
 public class User extends BaseModel<User> implements UserDetails {
   @Column(unique = true, nullable = false)
