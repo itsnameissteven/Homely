@@ -2,8 +2,11 @@ import { Text, View, StyleSheet } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ActionButton from "@/components/actionButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TaskForm from "@/components/taskForm";
+import { useState } from "react";
 
 export default function Index() {
+  const [isVisible, setIsVisible] = useState(false);
   return (
     <SafeAreaView style={styles.safeArea}>
 
@@ -12,10 +15,13 @@ export default function Index() {
       >
         <View style={styles.topBar}>
           <Text style={styles.text}> Add a Task</Text>
-          <ActionButton onPress={() => alert('You pressed a button.')}>
+          <ActionButton onPress={() => setIsVisible(true)}>
             <Ionicons name="add" size={32} color="black" />
           </ActionButton>
         </View>
+        <TaskForm isVisible={isVisible} onClose={() => setIsVisible(false)}>
+          <Text>Select</Text>
+        </TaskForm>
       </View>
     </SafeAreaView>
   );
