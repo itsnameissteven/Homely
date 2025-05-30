@@ -6,7 +6,6 @@ type Props = PropsWithChildren<{
   isVisible: boolean;
   onClose: () => void;
 }>;
-
 export default function TaskForm({ isVisible, children, onClose }: Props) {
   return (
     <View>
