@@ -1,4 +1,5 @@
 import { AppText } from "@/components/appText";
+import { SelectList } from "@/components/selectList";
 import { commonStyles } from "@/styles/commonStyles";
 import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
@@ -45,6 +46,7 @@ export default function AddTask() {
           style={styles.textInput}
         />
       </View>
+      <SelectList label={"Add Task"} />
     </SafeAreaView>
   )
 }
