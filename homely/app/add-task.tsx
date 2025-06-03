@@ -1,6 +1,8 @@
 import { AppText } from "@/components/appText";
+import { Button } from "@/components/button";
 import { SelectList } from "@/components/selectList";
 import { commonStyles } from "@/styles/commonStyles";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const FORM = { name: '', description: "" };
 export default function AddTask() {
   const [form, setForm] = useState(FORM)
+  const router = useRouter();
   return (
 
     <SafeAreaView style={commonStyles.mainView}>
@@ -46,7 +49,17 @@ export default function AddTask() {
           style={styles.textInput}
         />
       </View>
-      <SelectList label={"Add Task"} />
+      <SelectList label={"Frequency"} />
+      <View style={styles.btnContainer}>
+        <Button style={styles.btn}>
+          <AppText>Submit</AppText>
+        </Button>
+        <Button style={styles.btn}
+          onPress={router.back}
+        >
+          <AppText>Cancel</AppText>
+        </Button>
+      </View>
     </SafeAreaView>
   )
 }
@@ -82,4 +95,13 @@ const styles = StyleSheet.create({
     height: 100,
     textAlignVertical: "top",
   },
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  btn: {
+    width: "45%"
+  }
 });
