@@ -8,6 +8,7 @@ import { StyleSheet, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const FORM = { name: '', description: "" };
+const FREQUENCY = [{ label: "Once" }, { label: "Daily" }, { label: "Weekly" }, { label: "Bi-Weekly" }].map(r => ({ ...r, value: r.label }))
 export default function AddTask() {
   const [form, setForm] = useState(FORM)
   const router = useRouter();
@@ -49,7 +50,10 @@ export default function AddTask() {
           style={styles.textInput}
         />
       </View>
-      <SelectList label={"Frequency"} />
+      <View style={styles.textContainer}>
+        <AppText style={styles.label}>Frequency</AppText>
+        <SelectList label={"Frequency"} options={FREQUENCY} onSelect={() => null} />
+      </View>
       <View style={styles.btnContainer}>
         <Button style={styles.btn}>
           <AppText>Submit</AppText>
@@ -79,6 +83,7 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
+    marginBottom: 0,
     borderWidth: 1,
     borderRadius: 4,
     color: "#fff",
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
   textInput: {
     padding: 10,
     margin: 12,
+    marginBottom: 0,
     borderWidth: 1,
     borderRadius: 4,
     color: "#fff",
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 20,
+    marginTop: 30,
   },
   btn: {
     width: "45%"
